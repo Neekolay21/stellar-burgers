@@ -1,15 +1,39 @@
 import { Preloader } from '@ui';
 import { FeedUI } from '@ui-pages';
 import { TOrder } from '@utils-types';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
+import {
+  selectFeeds,
+  selectFeedsLoading,
+  getOrders,
+  getBurgers
+} from '../../services/burgerSlice';
+import { useDispatch, useSelector } from '../../services/store';
 
 export const Feed: FC = () => {
-  /** TODO: взять переменную из стора */
-  const orders: TOrder[] = [];
+  const dispatch = useDispatch();
+  const feeds = useSelector(selectFeeds);
+  const loading = useSelector(selectFeedsLoading);
 
-  if (!orders.length) {
+  useEffect(() => {
+    dispatch(getOrders());
+    dispatch(getBurgers());
+  }, [dispatch]);
+
+  const handleGetOrders = () => {
+    dispatch(getOrders());
+  };
+
+  if (loading || !feeds) {
     return <Preloader />;
   }
 
-  <FeedUI orders={orders} handleGetFeeds={() => {}} />;
+  return (
+    <FeedUI
+      orders={feeds.orders}
+      handleGetFeeds={handleGetOrders}
+      total={feeds.total}
+      totalToday={feeds.totalToday}
+    />
+  );
 };
