@@ -17,7 +17,7 @@ type TUserState = {
 const initialState: TUserState = {
   user: null,
   isLoading: false,
-  isInit: false,
+  isInit: false, // была ли совершена проверка наличия пользователя по токену
   error: null
 };
 

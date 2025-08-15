@@ -52,8 +52,7 @@ export const Login: FC = () => {
         ).unwrap();
 
         navigate('/');
-      } catch (error) {
-      }
+      } catch (error) {}
     },
     [dispatch, email, password, navigate]
   );

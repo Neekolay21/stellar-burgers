@@ -21,14 +21,12 @@ export const Register: FC = () => {
   const [password, setPassword] = useState('');
   const [userName, setUserName] = useState('');
 
-
   useEffect(() => {
     if (isAuthenticated) {
       navigate('/');
     }
   }, [isAuthenticated, navigate]);
 
- 
   useEffect(
     () => () => {
       dispatch(clearError());
@@ -40,7 +38,6 @@ export const Register: FC = () => {
     async (e: React.SyntheticEvent) => {
       e.preventDefault();
 
-     
       if (!userName || !email || !password) {
         return;
       }
@@ -54,11 +51,8 @@ export const Register: FC = () => {
           })
         ).unwrap();
 
-       
         navigate('/');
-      } catch (error) {
-        
-      }
+      } catch (error) {}
     },
     [dispatch, userName, email, password, navigate]
   );
