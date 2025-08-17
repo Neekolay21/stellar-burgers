@@ -25,6 +25,8 @@ import { useEffect } from 'react';
 import { Preloader } from '@ui';
 import { getCookie } from '../../utils/cookie';
 import { getIngredients } from '../../services/ingredientsSlice';
+import { getOrders } from '../../services/feedSlice';
+import { getUserOrders } from '../../services/userOrdersSlice';
 
 const App = () => {
   const navigate = useNavigate();
@@ -36,7 +38,9 @@ const App = () => {
   )?.background;
 
   useEffect(() => {
+    dispatch(getOrders());
     dispatch(getIngredients());
+    dispatch(getUserOrders());
   }, [dispatch]);
 
   useEffect(() => {
@@ -118,9 +122,7 @@ const App = () => {
           path='/feed/:number'
           element={
             <ProtectedRoute>
-              <Modal title={''} onClose={handleCloseModal}>
-                <OrderInfo />
-              </Modal>
+              <OrderInfo />
             </ProtectedRoute>
           }
         />
@@ -128,9 +130,7 @@ const App = () => {
           path='/ingredients/:id'
           element={
             <ProtectedRoute>
-              <Modal title={''} onClose={handleCloseModal}>
-                <IngredientDetails />
-              </Modal>
+              <IngredientDetails />
             </ProtectedRoute>
           }
         />
@@ -138,9 +138,7 @@ const App = () => {
           path='/profile/orders/:number'
           element={
             <ProtectedRoute>
-              <Modal title={''} onClose={handleCloseModal}>
-                <OrderInfo />
-              </Modal>
+              <OrderInfo />
             </ProtectedRoute>
           }
         />

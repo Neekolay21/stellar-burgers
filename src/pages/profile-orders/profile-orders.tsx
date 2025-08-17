@@ -17,10 +17,6 @@ export const ProfileOrders: FC = () => {
   const userOrders = useSelector(selectUserOrders);
   const loading = useSelector(selectUserOrdersLoading);
 
-  useEffect(() => {
-    dispatch(getUserOrders());
-  }, [dispatch]);
-
   const processedOrders = (userOrders || []).map((order) => {
     if (!order || !Array.isArray(order.ingredients)) {
       console.warn('Некорректные данные заказа:', order);

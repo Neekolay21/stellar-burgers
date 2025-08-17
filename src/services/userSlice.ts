@@ -75,7 +75,6 @@ const userSlice = createSlice({
         state.isLoading = false;
         state.user = action.payload.user;
         state.error = null;
-        localStorage.setItem('refreshToken', action.payload.refreshToken);
       })
       .addCase(loginUserThunk.rejected, (state, action) => {
         state.isLoading = false;
@@ -90,7 +89,6 @@ const userSlice = createSlice({
         state.isLoading = false;
         state.user = action.payload.user;
         state.error = null;
-        localStorage.setItem('refreshToken', action.payload.refreshToken);
       })
       .addCase(registerUserThunk.rejected, (state, action) => {
         state.isLoading = false;

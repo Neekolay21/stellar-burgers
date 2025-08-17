@@ -10,7 +10,8 @@ import {
 } from '../../services/orderSlice';
 import {
   clearConstructor,
-  selectConstructorItems
+  selectConstructorBun,
+  selectConstructorIngredients
 } from '../../services/constructorSlice';
 import { useNavigate } from 'react-router-dom';
 import { selectIsAuthenticated } from '../../services/userSlice';
@@ -18,7 +19,8 @@ import { selectIsAuthenticated } from '../../services/userSlice';
 export const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const constructorItems = useSelector(selectConstructorItems);
+  const constructorBun = useSelector(selectConstructorBun);
+  const constructorIngredients = useSelector(selectConstructorIngredients);
   const orderRequest = useSelector(selectOrderRequest);
   const orderModalData = useSelector(selectOrderModalData);
   const isAuthenticated = useSelector(selectIsAuthenticated);
@@ -29,12 +31,12 @@ export const BurgerConstructor: FC = () => {
       return;
     }
 
-    if (!constructorItems.bun || orderRequest) return;
+    if (!constructorBun || orderRequest) return;
 
     const ingredients = [
-      constructorItems.bun._id,
-      ...constructorItems.ingredients.map((item) => item._id),
-      constructorItems.bun._id
+      constructorBun._id,
+      ...constructorIngredients.map((item) => item._id),
+      constructorBun._id
     ];
 
     dispatch(createOrder(ingredients)).then(() => {
@@ -48,19 +50,20 @@ export const BurgerConstructor: FC = () => {
 
   const price = useMemo(
     () =>
-      (constructorItems.bun ? constructorItems.bun.price * 2 : 0) +
-      constructorItems.ingredients.reduce(
+      (constructorBun ? constructorBun.price * 2 : 0) +
+      constructorIngredients.reduce(
         (s: number, v: TConstructorIngredient) => s + v.price,
         0
       ),
-    [constructorItems]
+    [constructorBun, constructorIngredients]
   );
 
   return (
     <BurgerConstructorUI
       price={price}
       orderRequest={orderRequest}
-      constructorItems={constructorItems}
+      constructorBun={constructorBun}
+      constructorIngredients={constructorIngredients}
       orderModalData={orderModalData}
       onOrderClick={onOrderClick}
       closeOrderModal={handleCloseOrderModal}

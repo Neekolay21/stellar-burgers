@@ -10,27 +10,22 @@ import {
   selectUserOrders
 } from '../../services/userOrdersSlice';
 import { selectIngredients } from '../../services/ingredientsSlice';
+import { orderSelectorByNumber } from '../../services/selectors/orderSelecetorByNumber';
+import { getOrderByNumber } from '../../services/orderSlice';
 
 export const OrderInfo: FC = () => {
   const { number } = useParams<{ number: string }>();
+  const orderData = useSelector(orderSelectorByNumber(Number(number)));
   const feeds = useSelector(selectFeeds);
   const userOrders = useSelector(selectUserOrders);
   const dispatch = useDispatch();
   const ingredients = useSelector(selectIngredients);
 
   useEffect(() => {
-    if (
-      (!feeds || !feeds.orders || feeds.orders.length === 0) &&
-      (!userOrders || userOrders.length === 0)
-    ) {
-      dispatch(getOrders());
-      dispatch(getUserOrders());
+    if (!orderData && number) {
+      dispatch(getOrderByNumber(parseInt(number)));
     }
-  }, [feeds, userOrders, dispatch]);
-
-  const orderData = feeds?.orders.find(
-    (order) => order.number === Number(number)
-  );
+  }, [dispatch, number]);
 
   const orderInfo = useMemo(() => {
     if (!orderData || !ingredients.length) return null;

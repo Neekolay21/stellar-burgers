@@ -1,11 +1,14 @@
-import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+  createSelector,
+  createSlice,
+  nanoid,
+  PayloadAction
+} from '@reduxjs/toolkit';
 import { TIngredient, TConstructorIngredient, TOrder } from '@utils-types';
 
 export type TConstructorState = {
-  constructorItems: {
-    bun: TConstructorIngredient | null;
-    ingredients: TConstructorIngredient[];
-  };
+  bun: TConstructorIngredient | null;
+  ingredients: TConstructorIngredient[];
   orderModalData: {
     order: TOrder;
     name: string;
@@ -13,50 +16,50 @@ export type TConstructorState = {
 };
 
 const initialState: TConstructorState = {
-  constructorItems: {
-    bun: null,
-    ingredients: []
-  },
+  bun: null,
+  ingredients: [],
   orderModalData: null
 };
 
 export const constructorSlice = createSlice({
-  name: 'constructor',
+  name: 'burgerConstructor',
   initialState,
   reducers: {
-    addBun: (state, action: PayloadAction<TIngredient>) => {
-      state.constructorItems.bun = {
-        ...action.payload,
-        id: `${action.payload._id}-${Date.now()}`
-      };
+    addBun: {
+      reducer: (state, action: PayloadAction<TConstructorIngredient>) => {
+        state.bun = action.payload;
+      },
+      prepare: (ingredient: TIngredient) => ({
+        payload: { ...ingredient, id: nanoid() }
+      })
     },
-    addIngredient: (state, action: PayloadAction<TIngredient>) => {
-      const newIngredient: TConstructorIngredient = {
-        ...action.payload,
-        id: `${action.payload._id}-${Date.now()}`
-      };
-      state.constructorItems.ingredients.push(newIngredient);
+    addIngredient: {
+      reducer: (state, action: PayloadAction<TConstructorIngredient>) => {
+        state.ingredients.push(action.payload);
+      },
+      prepare: (ingredient: TIngredient) => ({
+        payload: { ...ingredient, id: nanoid() }
+      })
     },
     removeIngredient: (state, action: PayloadAction<string>) => {
-      state.constructorItems.ingredients =
-        state.constructorItems.ingredients.filter(
-          (item) => item.id !== action.payload
-        );
+      state.ingredients = state.ingredients.filter(
+        (item) => item.id !== action.payload
+      );
     },
     moveIngredient: (
       state,
       action: PayloadAction<{ dragIndex: number; hoverIndex: number }>
     ) => {
       const { dragIndex, hoverIndex } = action.payload;
-      const ingredients = [...state.constructorItems.ingredients];
+      const ingredients = [...state.ingredients];
       const draggedItem = ingredients[dragIndex];
       ingredients.splice(dragIndex, 1);
       ingredients.splice(hoverIndex, 0, draggedItem);
-      state.constructorItems.ingredients = ingredients;
+      state.ingredients = ingredients;
     },
     clearConstructor: (state) => {
-      state.constructorItems.bun = null;
-      state.constructorItems.ingredients = [];
+      state.bun = null;
+      state.ingredients = [];
       state.orderModalData = null;
     }
   }
@@ -72,19 +75,23 @@ export const {
 
 export default constructorSlice.reducer;
 
-export const selectConstructorItems = (state: {
-  constructor: TConstructorState;
-}) => state.constructor?.constructorItems ?? initialState.constructorItems;
+export const selectConstructorBun = (state: {
+  burgerConstructor: TConstructorState;
+}) => state.burgerConstructor?.bun ?? null;
+
+export const selectConstructorIngredients = (state: {
+  burgerConstructor: TConstructorState;
+}) => state.burgerConstructor?.ingredients ?? null;
 
 export const selectIngredientsCounters = createSelector(
-  [selectConstructorItems],
-  (constructorItems) => {
+  [selectConstructorBun, selectConstructorIngredients],
+  (bun, ingredients) => {
     const counters: { [key: string]: number } = {};
-    constructorItems.ingredients.forEach((ingredient) => {
+    ingredients.forEach((ingredient) => {
       counters[ingredient._id] = (counters[ingredient._id] || 0) + 1;
     });
-    if (constructorItems.bun) {
-      counters[constructorItems.bun._id] = 1;
+    if (bun) {
+      counters[bun._id] = 1;
     }
     return counters;
   }

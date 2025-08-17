@@ -15,7 +15,7 @@ import {
 const rootReducer = combineReducers({
   user: userSliceReducer,
   ingredients: ingredientsSliceReducer,
-  constructor: constructorSliceReducer,
+  burgerConstructor: constructorSliceReducer,
   order: orderSliceReducer,
   feed: feedSliceReducer,
   userOrder: userOrderSliceReducer
@@ -24,7 +24,6 @@ const rootReducer = combineReducers({
 const authErrorMiddleware = (store: any) => (next: any) => (action: any) => {
   const result = next(action);
 
-  
   if (action.type?.endsWith('/rejected')) {
     const errorMessage = action.error?.message || '';
 
@@ -33,7 +32,6 @@ const authErrorMiddleware = (store: any) => (next: any) => (action: any) => {
       errorMessage.includes('401') ||
       errorMessage.includes('Unauthorized')
     ) {
-    
       store.dispatch(logoutUserThunk());
     }
   }
