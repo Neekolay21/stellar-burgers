@@ -1,15 +1,32 @@
-import { FC, useMemo } from 'react';
+import { FC, useEffect, useMemo } from 'react';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
 import { useParams } from 'react-router-dom';
-import { useSelector } from '../../services/store';
-import { selectFeeds, selectIngredients } from '../../services/burgerSlice';
+import { useDispatch, useSelector } from '../../services/store';
+import { getOrders, selectFeeds } from '../../services/feedSlice';
+import {
+  getUserOrders,
+  selectUserOrders
+} from '../../services/userOrdersSlice';
+import { selectIngredients } from '../../services/ingredientsSlice';
 
 export const OrderInfo: FC = () => {
   const { number } = useParams<{ number: string }>();
   const feeds = useSelector(selectFeeds);
+  const userOrders = useSelector(selectUserOrders);
+  const dispatch = useDispatch();
   const ingredients = useSelector(selectIngredients);
+
+  useEffect(() => {
+    if (
+      (!feeds || !feeds.orders || feeds.orders.length === 0) &&
+      (!userOrders || userOrders.length === 0)
+    ) {
+      dispatch(getOrders());
+      dispatch(getUserOrders());
+    }
+  }, [feeds, userOrders, dispatch]);
 
   const orderData = feeds?.orders.find(
     (order) => order.number === Number(number)

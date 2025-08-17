@@ -27,7 +27,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   }
 
   if (isPublic && user) {
-    const from = location.state?.from || { pathname: '/' };
+    const from = location.state?.from || { pathname: '/profile' };
     return (
       <Navigate to={from} state={{ background: from?.state?.background }} />
     );

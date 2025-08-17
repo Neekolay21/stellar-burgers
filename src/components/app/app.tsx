@@ -24,6 +24,7 @@ import {
 import { useEffect } from 'react';
 import { Preloader } from '@ui';
 import { getCookie } from '../../utils/cookie';
+import { getIngredients } from '../../services/ingredientsSlice';
 
 const App = () => {
   const navigate = useNavigate();
@@ -33,6 +34,10 @@ const App = () => {
   const background = (
     location.state as { background?: typeof location } | undefined
   )?.background;
+
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
 
   useEffect(() => {
     if (getCookie('accessToken')) {
@@ -50,7 +55,6 @@ const App = () => {
     navigate(-1);
   };
 
-  // Раскомментируйте, если нужен прелоадер
   // if (!isInit) {
   //   return <Preloader />;
   // }

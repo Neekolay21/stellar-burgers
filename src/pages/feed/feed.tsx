@@ -5,10 +5,10 @@ import { FC, useEffect } from 'react';
 import {
   selectFeeds,
   selectFeedsLoading,
-  getOrders,
-  getBurgers
-} from '../../services/burgerSlice';
+  getOrders
+} from '../../services/feedSlice';
 import { useDispatch, useSelector } from '../../services/store';
+import { getIngredients } from '../../services/ingredientsSlice';
 
 export const Feed: FC = () => {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ export const Feed: FC = () => {
 
   useEffect(() => {
     dispatch(getOrders());
-    dispatch(getBurgers());
+    dispatch(getIngredients());
   }, [dispatch]);
 
   const handleGetOrders = () => {

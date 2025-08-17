@@ -5,10 +5,13 @@ import { useDispatch, useSelector } from '../../services/store';
 import {
   closeOrderModal,
   createOrder,
-  selectConstructorItems,
   selectOrderModalData,
   selectOrderRequest
-} from '../../services/burgerSlice';
+} from '../../services/orderSlice';
+import {
+  clearConstructor,
+  selectConstructorItems
+} from '../../services/constructorSlice';
 import { useNavigate } from 'react-router-dom';
 import { selectIsAuthenticated } from '../../services/userSlice';
 
@@ -34,7 +37,9 @@ export const BurgerConstructor: FC = () => {
       constructorItems.bun._id
     ];
 
-    dispatch(createOrder(ingredients));
+    dispatch(createOrder(ingredients)).then(() => {
+      dispatch(clearConstructor());
+    });
   };
 
   const handleCloseOrderModal = () => {

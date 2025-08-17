@@ -1,6 +1,10 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import burgerSliceReducer from './burgerSlice';
 import userSliceReducer, { logoutUserThunk } from './userSlice';
+import ingredientsSliceReducer from './ingredientsSlice';
+import constructorSliceReducer from './constructorSlice';
+import orderSliceReducer from './orderSlice';
+import feedSliceReducer from './feedSlice';
+import userOrderSliceReducer from './userOrdersSlice';
 
 import {
   TypedUseSelectorHook,
@@ -9,14 +13,18 @@ import {
 } from 'react-redux';
 
 const rootReducer = combineReducers({
-  burger: burgerSliceReducer,
-  user: userSliceReducer
+  user: userSliceReducer,
+  ingredients: ingredientsSliceReducer,
+  constructor: constructorSliceReducer,
+  order: orderSliceReducer,
+  feed: feedSliceReducer,
+  userOrder: userOrderSliceReducer
 });
 
 const authErrorMiddleware = (store: any) => (next: any) => (action: any) => {
   const result = next(action);
 
-  // Если действие отклонено и связано с авторизацией
+  
   if (action.type?.endsWith('/rejected')) {
     const errorMessage = action.error?.message || '';
 
@@ -25,7 +33,7 @@ const authErrorMiddleware = (store: any) => (next: any) => (action: any) => {
       errorMessage.includes('401') ||
       errorMessage.includes('Unauthorized')
     ) {
-      // Очищаем данные пользователя
+    
       store.dispatch(logoutUserThunk());
     }
   }

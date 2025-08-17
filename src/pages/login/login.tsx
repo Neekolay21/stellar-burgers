@@ -1,7 +1,7 @@
 import { FC, SyntheticEvent, useCallback, useEffect, useState } from 'react';
 import { LoginUI } from '@ui-pages';
 import { useDispatch, useSelector } from '../../services/store';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   clearError,
   loginUserThunk,
@@ -13,6 +13,7 @@ import {
 export const Login: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const isLoading = useSelector(selectUserLoading);
   const error = useSelector(selectUserError);
   const isAuthenticated = useSelector(selectIsAuthenticated);
@@ -20,10 +21,12 @@ export const Login: FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const from = location.state?.from?.pathname || '/profile';
+
   // Редирект если уже авторизован
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/');
+      navigate('/profile');
     }
   }, [isAuthenticated, navigate]);
 
@@ -51,7 +54,7 @@ export const Login: FC = () => {
           })
         ).unwrap();
 
-        navigate('/');
+        navigate('/profile');
       } catch (error) {}
     },
     [dispatch, email, password, navigate]

@@ -4,10 +4,10 @@ import { TOrder } from '@utils-types';
 import { FC, useEffect } from 'react';
 import {
   getUserOrders,
-  selectIngredients,
   selectUserOrders,
   selectUserOrdersLoading
-} from '../../services/burgerSlice';
+} from '../../services/userOrdersSlice';
+import { selectIngredients } from '../../services/ingredientsSlice';
 import { useDispatch, useSelector } from '../../services/store';
 import { Preloader } from '@ui';
 
