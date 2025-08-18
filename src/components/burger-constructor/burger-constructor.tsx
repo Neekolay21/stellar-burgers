@@ -27,7 +27,7 @@ export const BurgerConstructor: FC = () => {
 
   const onOrderClick = () => {
     if (!isAuthenticated) {
-      navigate('/login');
+      navigate('/login', { state: { from: { pathname: '/' } } });
       return;
     }
 

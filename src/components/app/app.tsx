@@ -38,9 +38,7 @@ const App = () => {
   )?.background;
 
   useEffect(() => {
-    dispatch(getOrders());
     dispatch(getIngredients());
-    dispatch(getUserOrders());
   }, [dispatch]);
 
   useEffect(() => {

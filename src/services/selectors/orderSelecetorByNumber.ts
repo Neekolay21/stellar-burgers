@@ -2,7 +2,7 @@ import { RootState } from '../store';
 
 export function orderSelectorByNumber(numberOrder: number) {
   return (store: RootState) => {
-    if (store.feed) {
+    if (store.feed.feeds?.orders.length) {
       return store.feed.feeds?.orders.find(
         (order) => order.number === numberOrder
       );

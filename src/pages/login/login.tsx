@@ -26,9 +26,9 @@ export const Login: FC = () => {
   // Редирект если уже авторизован
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/profile');
+      navigate(from, { replace: true });
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, navigate, from]);
 
   // Очистка ошибки при размонтировании
   useEffect(
@@ -54,10 +54,10 @@ export const Login: FC = () => {
           })
         ).unwrap();
 
-        navigate('/profile');
+        navigate(from, { replace: true });
       } catch (error) {}
     },
-    [dispatch, email, password, navigate]
+    [dispatch, email, password, navigate, from]
   );
 
   return (

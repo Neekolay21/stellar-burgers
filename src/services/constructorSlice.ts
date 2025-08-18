@@ -91,7 +91,7 @@ export const selectIngredientsCounters = createSelector(
       counters[ingredient._id] = (counters[ingredient._id] || 0) + 1;
     });
     if (bun) {
-      counters[bun._id] = 1;
+      counters[bun._id] = 2;
     }
     return counters;
   }

@@ -15,6 +15,10 @@ export const Feed: FC = () => {
   const feeds = useSelector(selectFeeds);
   const loading = useSelector(selectFeedsLoading);
 
+  useEffect(() => {
+    dispatch(getOrders());
+  }, [dispatch]);
+
   const handleGetOrders = () => {
     dispatch(getOrders());
   };

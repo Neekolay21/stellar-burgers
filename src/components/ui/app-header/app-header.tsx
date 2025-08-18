@@ -25,7 +25,7 @@ export const AppHeaderUI: FC<TAppHeaderUIProps> = ({
             `${styles.link} ${isActive ? styles.active : ''}`
           }
         >
-          <BurgerIcon type={'primary'} />
+          <BurgerIcon type={isConstructorActive ? 'primary' : 'secondary'} />
           <p
             className={`text text_type_main-default ml-2 mr-10 ${isConstructorActive ? styles.active : ''}`}
           >
