@@ -5,7 +5,8 @@ import userReducer, {
   updateUserThunk,
   logoutUserThunk,
   clearError,
-  setInit
+  setInit,
+  initialState
 } from '../userSlice';
 import { mockUserData, mockLoginData, mockUserRegisterData } from '../mockData';
 
@@ -16,13 +17,6 @@ jest.mock('@api', () => ({
   registerUserApi: jest.fn(),
   updateUserApi: jest.fn()
 }));
-
-const initialState = {
-  user: null,
-  isLoading: false,
-  isInit: false,
-  error: null
-};
 
 describe('тесты userSlice', () => {
   test('clearError', () => {

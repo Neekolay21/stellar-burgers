@@ -3,7 +3,8 @@ import constructorReducer, {
   addIngredient,
   removeIngredient,
   moveIngredient,
-  clearConstructor
+  clearConstructor,
+  initialState
 } from '../constructorSlice';
 import {
   mockBun,
@@ -11,12 +12,6 @@ import {
   mockSauce,
   mockCreateOrderResponse
 } from '../mockData';
-
-const initialState = {
-  bun: null,
-  ingredients: [],
-  orderModalData: null
-};
 
 describe('тесты constructorSlice', () => {
   test('add bun', () => {

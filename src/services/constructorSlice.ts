@@ -15,7 +15,7 @@ export type TConstructorState = {
   } | null;
 };
 
-const initialState: TConstructorState = {
+export const initialState: TConstructorState = {
   bun: null,
   ingredients: [],
   orderModalData: null

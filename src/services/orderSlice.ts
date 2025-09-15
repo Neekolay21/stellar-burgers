@@ -14,7 +14,7 @@ export type TOrderState = {
   userOrdersError: string | null | undefined;
 };
 
-const initialState: TOrderState = {
+export const initialState: TOrderState = {
   orderModalData: null,
   orderRequest: false,
   orderError: null,

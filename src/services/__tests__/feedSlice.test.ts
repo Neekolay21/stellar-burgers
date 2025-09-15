@@ -1,15 +1,9 @@
-import feedReducer, { getOrders } from '../feedSlice';
+import feedReducer, { getOrders, initialState } from '../feedSlice';
 import { mockFeedsData } from '../mockData';
 
 jest.mock('@api', () => ({
   getFeedsApi: jest.fn()
 }));
-
-const initialState = {
-  feeds: null,
-  feedsLoading: false,
-  feedsError: null
-};
 
 describe('тесты feedSlice', () => {
   test('getOrders.pending', () => {

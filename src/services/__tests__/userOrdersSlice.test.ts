@@ -1,15 +1,9 @@
-import userOrdersReducer, { getUserOrders } from '../userOrdersSlice';
+import userOrdersReducer, { getUserOrders, initialState } from '../userOrdersSlice';
 import { mockUserOrders } from '../mockData';
 
 jest.mock('@api', () => ({
   getOrdersApi: jest.fn()
 }));
-
-const initialState = {
-  userOrders: [],
-  userOrdersLoading: false,
-  userOrdersError: null
-};
 
 describe('тесты user OrdersSlice', () => {
   test('getUserOrders.pending', () => {

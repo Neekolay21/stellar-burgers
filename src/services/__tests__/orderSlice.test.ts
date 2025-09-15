@@ -1,7 +1,8 @@
 import orderReducer, {
   createOrder,
   getOrderByNumber,
-  closeOrderModal
+  closeOrderModal,
+  initialState
 } from '../orderSlice';
 import {
   mockOrderIds,
@@ -15,15 +16,6 @@ jest.mock('@api', () => ({
   getOrderByNumberApi: jest.fn(),
   getOrdersApi: jest.fn()
 }));
-
-const initialState = {
-  orderModalData: null,
-  orderRequest: false,
-  orderError: null,
-  userOrders: [],
-  userOrdersLoading: false,
-  userOrdersError: null
-};
 
 describe('тесты orderSlice', () => {
   test('createOrder.pending', () => {

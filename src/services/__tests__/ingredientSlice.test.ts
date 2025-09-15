@@ -1,15 +1,9 @@
-import ingredientsReducer, { getIngredients } from '../ingredientsSlice';
+import ingredientsReducer, { getIngredients, initialState } from '../ingredientsSlice';
 import { mockIngredientsData } from '../mockData';
 
 jest.mock('@api', () => ({
   getIngredientsApi: jest.fn()
 }));
-
-const initialState = {
-  ingredients: [],
-  loading: false,
-  error: null
-};
 
 describe('тесты ingredientsSlice', () => {
   test('getIngredients.pending', () => {

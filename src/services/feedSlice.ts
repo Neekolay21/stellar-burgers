@@ -12,7 +12,7 @@ export type TFeedState = {
   feedsError: string | null;
 };
 
-const initialState: TFeedState = {
+export const initialState: TFeedState = {
   feeds: null,
   feedsLoading: false,
   feedsError: null

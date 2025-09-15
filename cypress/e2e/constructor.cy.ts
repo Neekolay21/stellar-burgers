@@ -1,7 +1,8 @@
 import { selectors } from '../support/selectors';
+import { TIngredient } from '../../src/utils/types';
 
 describe('Проверка конструктора бургера', () => {
-  let ingredientsData: any;
+  let ingredientsData: TIngredient[];
 
   beforeEach(() => {
     cy.intercept('GET', '/api/auth/user', { fixture: 'user.json' }).as('getUser');
@@ -15,18 +16,18 @@ describe('Проверка конструктора бургера', () => {
     cy.wait('@getUser');
     cy.wait('@getIngredients');
 
-    cy.fixture('ingredients.json').then((data) => {
+    cy.fixture('ingredients.json').then((data: { data: TIngredient[]}) => {
       ingredientsData = data.data;
 
-      const bun = ingredientsData.find((i: any) => i.type === 'bun');
+      const bun = ingredientsData.find((i) => i.type === 'bun') as TIngredient;
       cy.contains(bun.name).parents(selectors.ingredient).as('bun');
       cy.get('@bun').find('button', { timeout: 10000 }).should('exist').as('bunAddBtn');
 
-      const filling = ingredientsData.find((i: any) => i.type === 'main');
+      const filling = ingredientsData.find((i) => i.type === 'main') as TIngredient;
       cy.contains(filling.name).parents(selectors.ingredient).as('filling');
       cy.get('@filling').find('button', { timeout: 10000 }).should('exist').as('fillingAddBtn');
 
-      const sauce = ingredientsData.find((i: any) => i.type === 'sauce');
+      const sauce = ingredientsData.find((i) => i.type === 'sauce') as TIngredient;
       cy.contains(sauce.name).parents(selectors.ingredient).as('sauce');
       cy.get('@sauce').find('button', { timeout: 10000 }).should('exist').as('sauceAddBtn');
     });

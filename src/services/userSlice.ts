@@ -14,7 +14,7 @@ type TUserState = {
   isInit: boolean;
   error: string | null;
 };
-const initialState: TUserState = {
+export const initialState: TUserState = {
   user: null,
   isLoading: false,
   isInit: false,
