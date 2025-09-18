@@ -6,6 +6,7 @@ export type BurgerIngredientsUIProps = {
   buns: TIngredient[];
   mains: TIngredient[];
   sauces: TIngredient[];
+  ingredientsCounters: { [key: string]: number };
   titleBunRef: RefObject<HTMLHeadingElement>;
   titleMainRef: RefObject<HTMLHeadingElement>;
   titleSaucesRef: RefObject<HTMLHeadingElement>;
