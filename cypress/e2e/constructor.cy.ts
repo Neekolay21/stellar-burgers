@@ -44,9 +44,9 @@ describe('Проверка конструктора бургера', () => {
     cy.get('@sauceAddBtn').click({ force: true });
 
     cy.fixture('ingredients.json').then((data) => {
-      const bun = data.data.find((i: any) => i.type === 'bun');
-      const filling = data.data.find((i: any) => i.type === 'main');
-      const sauce = data.data.find((i: any) => i.type === 'sauce');
+      const bun = data.data.find((i: TIngredient) => i.type === 'bun');
+      const filling = data.data.find((i: TIngredient) => i.type === 'main');
+      const sauce = data.data.find((i: TIngredient) => i.type === 'sauce');
 
       cy.get(selectors.constructorElement)
         .should('contain.text', bun.name)
@@ -60,7 +60,7 @@ describe('Проверка конструктора бургера', () => {
     cy.get(selectors.modal, { timeout: 10000 }).should('exist');
 
     cy.fixture('ingredients.json').then((data) => {
-      const bun = data.data.find((i: any) => i.type === 'bun');
+      const bun = data.data.find((i: TIngredient) => i.type === 'bun');
 
       cy.get(selectors.modal)
         .find(selectors.ingredientName)
@@ -81,7 +81,7 @@ describe('Проверка конструктора бургера', () => {
     cy.get(selectors.modalOverlay).should('exist');
 
     cy.fixture('ingredients.json').then((data) => {
-      const filling = data.data.find((i: any) => i.type === 'main');
+      const filling = data.data.find((i: TIngredient) => i.type === 'main');
 
       cy.get(selectors.modal)
         .find(selectors.ingredientName)
@@ -104,9 +104,9 @@ describe('Проверка конструктора бургера', () => {
     cy.get('@sauceAddBtn').click({ force: true });
 
     cy.fixture('ingredients.json').then((data) => {
-      const bun = data.data.find((i: any) => i.type === 'bun');
-      const filling = data.data.find((i: any) => i.type === 'main');
-      const sauce = data.data.find((i: any) => i.type === 'sauce');
+      const bun = data.data.find((i: TIngredient) => i.type === 'bun');
+      const filling = data.data.find((i: TIngredient) => i.type === 'main');
+      const sauce = data.data.find((i: TIngredient) => i.type === 'sauce');
 
       cy.get(selectors.constructorElement)
         .should('contain.text', bun.name)

@@ -1,3 +1,4 @@
+import { nanoid } from '@reduxjs/toolkit';
 import constructorReducer, {
   addBun,
   addIngredient,
@@ -13,13 +14,25 @@ import {
   mockCreateOrderResponse
 } from '../mockData';
 
+jest.mock('@reduxjs/toolkit', () => ({
+  ...jest.requireActual('@reduxjs/toolkit'),
+  nanoid: jest.fn() 
+}));
+
 describe('тесты constructorSlice', () => {
+  beforeEach(() => {
+    (nanoid as jest.Mock).mockReturnValue('test-id');
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
   test('add bun', () => {
     const state = constructorReducer(initialState, addBun(mockBun));
     expect(state.bun).not.toBeNull();
     expect(state.bun).toMatchObject({
       ...mockBun,
-      id: expect.any(String)
+      id: 'test-id'
     });
   });
 
@@ -30,7 +43,7 @@ describe('тесты constructorSlice', () => {
     );
     expect(state.ingredients[0]).toMatchObject({
       ...mockIngredient,
-      id: expect.any(String)
+      id: 'test-id'
     });
   });
 

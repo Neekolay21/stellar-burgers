@@ -15,6 +15,7 @@ import {
   selectUserLoading,
   updateUserThunk
 } from '../../services/userSlice';
+import { TRegisterData } from '@api';
 
 export const Profile: FC = () => {
   const dispatch = useDispatch();
@@ -82,7 +83,7 @@ export const Profile: FC = () => {
       }
 
       try {
-        const updateData: any = {
+        const updateData: { email: string; name: string; password?: string } = {
           name: formValue.name,
           email: formValue.email
         };
